@@ -1195,6 +1195,8 @@ class Relational implements \IteratorAggregate, \ArrayAccess, \Serializable
 	 * @return  void
 	 * @since   2.0.0
 	 **/
+
+	#[\ReturnTypeWillChange]
 	public function offsetSet($key, $value)
 	{
 		if (is_array($key) || is_object($key))
@@ -1217,6 +1219,8 @@ class Relational implements \IteratorAggregate, \ArrayAccess, \Serializable
 	 * @return  bool
 	 * @since   2.0.0
 	 **/
+
+	#[\ReturnTypeWillChange]
 	public function offsetExists($key)
 	{
 		return $this->hasAttribute($key);
@@ -1229,6 +1233,8 @@ class Relational implements \IteratorAggregate, \ArrayAccess, \Serializable
 	 * @return  void
 	 * @since   2.0.0
 	 **/
+
+	#[\ReturnTypeWillChange]
 	public function offsetUnset($key)
 	{
 		unset($this->attributes[$key]);
@@ -1241,6 +1247,8 @@ class Relational implements \IteratorAggregate, \ArrayAccess, \Serializable
 	 * @return  mixed
 	 * @since   2.0.0
 	 **/
+
+	#[\ReturnTypeWillChange]
 	public function offsetGet($key)
 	{
 		return $this->get($key);
