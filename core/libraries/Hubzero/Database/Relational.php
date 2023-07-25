@@ -472,6 +472,8 @@ class Relational implements \IteratorAggregate, \ArrayAccess, \Serializable
 	 * @return  string
 	 * @since   2.1.0
 	 **/
+
+	#[\ReturnTypeWillChange]
 	public function serialize()
 	{
 		return serialize($this->getAttributes());
@@ -484,6 +486,8 @@ class Relational implements \IteratorAggregate, \ArrayAccess, \Serializable
 	 * @return  void
 	 * @since   2.1.0
 	 **/
+
+	#[\ReturnTypeWillChange]
 	public function unserialize($data)
 	{
 		$this->__construct();
