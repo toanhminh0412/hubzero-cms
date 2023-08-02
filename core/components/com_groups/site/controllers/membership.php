@@ -714,7 +714,7 @@ class Membership extends Base
 
 		// Build the e-mail message
 		$eview = new \Hubzero\Component\View(array('name' => 'emails', 'layout' => 'accepted'));
-		$eview->option   = $this->_option;
+		$eview->set('option', $this->_option);
 		$eview->sitename = Config::get('sitename');
 		$eview->user     = User::getInstance();
 		$eview->group    = $this->view->group;
@@ -841,7 +841,7 @@ class Membership extends Base
 
 		// Build the e-mail message
 		$eview = new \Hubzero\Component\View(array('name' => 'emails', 'layout' => 'cancelled'));
-		$eview->option   = $this->_option;
+		$eview->set('option', $this->_option);
 		$eview->sitename = Config::get('sitename');
 		$eview->user     = User::getInstance();
 		$eview->group    = $this->view->group;
@@ -1152,7 +1152,7 @@ class Membership extends Base
 			'name'   => 'emails',
 			'layout' => 'request'
 		));
-		$eview->option = $this->_option;
+		$eview->set('option', $this->_option);
 		$eview->sitename = Config::get('sitename');
 		$eview->user = User::getInstance();
 		$eview->group = $this->view->group;
