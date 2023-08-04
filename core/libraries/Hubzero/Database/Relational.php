@@ -1814,6 +1814,7 @@ class Relational implements \IteratorAggregate, \ArrayAccess, \Serializable
 	 * @return  self
 	 * @since   2.0.0
 	 **/
+	/*
 	private function whereRelated($relationship, $constraint)
 	{
 		$this->data = [];
@@ -1848,6 +1849,7 @@ class Relational implements \IteratorAggregate, \ArrayAccess, \Serializable
 
 		return $this;
 	}
+	*/
 
 	/**
 	 * Seeds the rows with any pre-fetched data
