@@ -66,7 +66,7 @@ class plgAuthenticationPUCAS extends \Hubzero\Plugin\Plugin
 
 		if (Config::Get('debug'))
 		{
-			$debug_location = $this->params->get('debug_location', '/var/log/apache2/php/phpCAS.log');
+			$debug_location = $this->params->get('debug_location', '/var/log/php/phpCAS.log');
 			phpCAS::setDebug($debug_location);
 		}
 
@@ -345,7 +345,7 @@ class plgAuthenticationPUCAS extends \Hubzero\Plugin\Plugin
 		{
 			if (Config::get('debug'))
 			{
-				$debug_location = trim($this->params->get('debug_location', '/var/log/apache2/php/phpCAS.log'));
+				$debug_location = trim($this->params->get('debug_location', '/var/log/php/phpCAS.log'));
 
 				if ($debug_location)
 				{
