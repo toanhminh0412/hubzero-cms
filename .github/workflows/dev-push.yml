@@ -36,8 +36,9 @@ jobs:
             echo 'No freeze file found. Proceeding with stash and pull.'
             echo \"$(date) - No freeze file found. Stashing and pulling.\" >> /var/www/dev/deployments.log
             cd /var/www/dev/;
+            git pull origin dev >> /var/www/dev/deployments.log 2>&1;
             git stash -u >> /var/www/dev/deployments.log 2>&1;
-            git pull >> /var/www/dev/deployments.log 2>&1;
+            git pull --ff-only >> /var/www/dev/deployments.log 2>&1;
             echo \"$(date) - Stash and pull completed.\" >> /var/www/dev/deployments.log
           else
             echo 'Freeze file exists. Skipping stash and pull.'
