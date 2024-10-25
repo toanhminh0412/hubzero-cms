@@ -18,14 +18,14 @@ jobs:
 #        ssh hubadmin@stage.cmkc.hubzero.org "
 #          if [ ! -f /var/www/stage/freeze ]; then
 #            echo 'No freeze file found. Proceeding with stash and pull.'
-#            echo \"$(date) - No freeze file found. Stashing and pulling.\" >> /var/www/stage/deployments.log
+#            echo \"$(date) - No freeze file found. Stashing and pulling.\" >> /var/www/stage/auto-deployments.log
 #            cd /var/www/stage/;
-#            git stash -u >> /var/www/stage/deployments.log 2>&1;
-#            git pull >> /var/www/stage/deployments.log 2>&1;
-#            echo \"$(date) - Stash and pull completed.\" >> /var/www/stage/deployments.log
+#            git stash -u >> /var/www/stage/auto-deployments.log 2>&1;
+#            git pull >> /var/www/stage/auto-deployments.log 2>&1;
+#            echo \"$(date) - Stash and pull completed.\" >> /var/www/stage/auto-deployments.log
 #          else
 #            echo 'Freeze file exists. Skipping stash and pull.'
-#            echo \"$(date) - Freeze file exists. Stash and pull skipped.\" >> /var/www/stage/deployments.log
+#            echo \"$(date) - Freeze file exists. Stash and pull skipped.\" >> /var/www/stage/auto-deployments.log
 #          fi
 #        "
     - name: dev push to dev.purr.purdue.edu
@@ -34,14 +34,14 @@ jobs:
         ssh -o StrictHostKeyChecking=no hubadmin@dev.purr.purdue.edu "
           if [ ! -f /var/www/dev/freeze ]; then
             echo 'No freeze file found. Proceeding with stash and pull.'
-            echo \"$(date) - No freeze file found. Stashing and pulling.\" >> /var/www/dev/deployments.log
+            echo \"$(date) - No freeze file found. Stashing and pulling.\" >> /var/www/dev/auto-deployments.log
             cd /var/www/dev/;
-            git pull origin dev >> /var/www/dev/deployments.log 2>&1;
-            git stash -u >> /var/www/dev/deployments.log 2>&1;
-            git pull --ff-only >> /var/www/dev/deployments.log 2>&1;
-            echo \"$(date) - Stash and pull completed.\" >> /var/www/dev/deployments.log
+            git pull origin dev >> /var/www/dev/auto-deployments.log 2>&1;
+            git stash -u >> /var/www/dev/auto-deployments.log 2>&1;
+            git pull --ff-only >> /var/www/dev/auto-deployments.log 2>&1;
+            echo \"$(date) - Stash and pull completed.\" >> /var/www/dev/auto-deployments.log
           else
             echo 'Freeze file exists. Skipping stash and pull.'
-            echo \"$(date) - Freeze file exists. Stash and pull skipped.\" >> /var/www/dev/deployments.log
+            echo \"$(date) - Freeze file exists. Stash and pull skipped.\" >> /var/www/dev/auto-deployments.log
           fi
         "
