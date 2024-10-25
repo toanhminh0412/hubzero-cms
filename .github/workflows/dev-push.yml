@@ -31,18 +31,18 @@ jobs:
     - name: dev push to dev.purr.purdue.edu
       run: |
         echo "Checking if freeze-auto-deployments file exists and conditionally stashing and pulling"
-        ssh -o StrictHostKeyChecking=no hubadmin@dev.purr.purdue.edu "
+        ssh -o StrictHostKeyChecking=no hubadmin@dev.purr.purdue.edu '
           if [ ! -f /var/www/dev/freeze-auto-deployments ]; then
             echo "No freeze-auto-deployments file found. Proceeding with stash and pull."
-            echo \"$(date) ----------------------------------------- begin auto deployment"
-            echo \"$(date) - No freeze-auto-deployments file found. Stashing and pulling.\" >> /var/www/dev/auto-deployments.log
+            echo "$(date) ----------------------------------------- begin auto deployment"
+            echo "$(date) - No freeze-auto-deployments file found. Stashing and pulling." >> /var/www/dev/auto-deployments.log
             cd /var/www/dev/;
             git pull origin dev >> /var/www/dev/auto-deployments.log 2>&1;
             git stash -u >> /var/www/dev/auto-deployments.log 2>&1;
             git pull --ff-only >> /var/www/dev/auto-deployments.log 2>&1;
-            echo \"$(date) ----------------------------------------- end auto deployment"
+            echo "$(date) ----------------------------------------- end auto deployment"
           else
             echo "freeze-auto-deployments file exists. Skipping stash and pull."
-            echo \"$(date) - freeze-auto-deployments file exists, auto deployment skipped.\" >> /var/www/dev/auto-deployments.log
+            echo "$(date) - freeze-auto-deployments file exists, auto deployment skipped." >> /var/www/dev/auto-deployments.log
           fi
-        "
+        '
