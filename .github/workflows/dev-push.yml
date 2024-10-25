@@ -9,8 +9,9 @@ jobs:
       with:
         key: ${{ secrets.HUBADMIN_KEY }}
         if_key_exists: replace ### replace|ignore|fail; optional (defaults to fail)
-#        known_hosts: ${{ secrets.KNOWN_HOSTS }}
-        known_hosts: unnecessary
+        known_hosts: |
+          ${{ secrets.KNOWN_HOSTS_DEV_PURR_PURDUE_EDU }}
+          ${{ secrets.KNOWN_HOSTS_STAGE_CMKC_HUBZERO_ORG }}
 #    - name: dev push to stage.cmkc.hubzero.org
 #      run: |
 #        echo "Checking if 'freeze' file exists and conditionally stashing and pulling"
