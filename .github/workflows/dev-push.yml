@@ -31,7 +31,7 @@ jobs:
     - name: dev push to dev.purr.purdue.edu
       run: |
         echo "Checking if 'freeze' file exists and conditionally stashing and pulling"
-        ssh hubadmin@dev.purr.purdue.edu "
+        ssh StrictHostKeyChecking=no hubadmin@dev.purr.purdue.edu "
           if [ ! -f /var/www/dev/freeze ]; then
             echo 'No freeze file found. Proceeding with stash and pull.'
             echo \"$(date) - No freeze file found. Stashing and pulling.\" >> /var/www/dev/deployments.log
