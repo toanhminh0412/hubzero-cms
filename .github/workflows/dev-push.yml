@@ -10,7 +10,35 @@ jobs:
         key: ${{ secrets.HUBADMIN_KEY }}
         if_key_exists: replace ### replace|ignore|fail; optional (defaults to fail)
         known_hosts: ${{ secrets.KNOWN_HOSTS }}
-    - name: dev push to stage.cmkc.hubzero.org
+#    - name: dev push to stage.cmkc.hubzero.org
+#      run: |
+#        echo "Checking if 'freeze' file exists and conditionally stashing and pulling"
+#        ssh hubadmin@stage.cmkc.hubzero.org "
+#          if [ ! -f /var/www/stage/freeze ]; then
+#            echo 'No freeze file found. Proceeding with stash and pull.'
+#            echo \"$(date) - No freeze file found. Stashing and pulling.\" >> /var/www/stage/deployments.log
+#            cd /var/www/stage/;
+#            git stash -u >> /var/www/stage/deployments.log 2>&1;
+#            git pull >> /var/www/stage/deployments.log 2>&1;
+#            echo \"$(date) - Stash and pull completed.\" >> /var/www/stage/deployments.log
+#          else
+#            echo 'Freeze file exists. Skipping stash and pull.'
+#            echo \"$(date) - Freeze file exists. Stash and pull skipped.\" >> /var/www/stage/deployments.log
+#          fi
+#        "
+    - name: dev push to dev.purr.purdue.edu
       run: |
-        echo "updating /var/www/stage/deployments.txt file"
-        ssh hubadmin@stage.cmkc.hubzero.org "date >> /var/www/stage/deployments.txt"
+        echo "Checking if 'freeze' file exists and conditionally stashing and pulling"
+        ssh hubadmin@dev.purr.purdue.edu "
+          if [ ! -f /var/www/dev/freeze ]; then
+            echo 'No freeze file found. Proceeding with stash and pull.'
+            echo \"$(date) - No freeze file found. Stashing and pulling.\" >> /var/www/dev/deployments.log
+            cd /var/www/dev/;
+            git stash -u >> /var/www/dev/deployments.log 2>&1;
+            git pull >> /var/www/dev/deployments.log 2>&1;
+            echo \"$(date) - Stash and pull completed.\" >> /var/www/dev/deployments.log
+          else
+            echo 'Freeze file exists. Skipping stash and pull.'
+            echo \"$(date) - Freeze file exists. Stash and pull skipped.\" >> /var/www/dev/deployments.log
+          fi
+        "
