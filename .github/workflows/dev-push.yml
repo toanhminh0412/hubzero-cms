@@ -34,14 +34,15 @@ jobs:
         ssh -o StrictHostKeyChecking=no hubadmin@dev.purr.purdue.edu "
           if [ ! -f /var/www/dev/freeze-auto-deployments ]; then
             echo 'No freeze-auto-deployments file found. Proceeding with stash and pull.'
+            echo \"$(date) ----------------------------------------- begin auto deployment"
             echo \"$(date) - No freeze-auto-deployments file found. Stashing and pulling.\" >> /var/www/dev/auto-deployments.log
             cd /var/www/dev/;
             git pull origin dev >> /var/www/dev/auto-deployments.log 2>&1;
             git stash -u >> /var/www/dev/auto-deployments.log 2>&1;
             git pull --ff-only >> /var/www/dev/auto-deployments.log 2>&1;
-            echo \"$(date) - Stash and pull completed.\" >> /var/www/dev/auto-deployments.log
+            echo \"$(date) ----------------------------------------- end auto deployment"
           else
             echo 'freeze-auto-deployments file exists. Skipping stash and pull.'
-            echo \"$(date) - freeze-auto-deployments file exists. Stash and pull skipped.\" >> /var/www/dev/auto-deployments.log
+            echo \"$(date) - freeze-auto-deployments file exists, auto deployment skipped.\" >> /var/www/dev/auto-deployments.log
           fi
         "
