@@ -12,5 +12,5 @@ jobs:
         known_hosts: ${{ secrets.KNOWN_HOSTS }}
     - name: dev push to stage.cmkc.hubzero.org
       run: |
-        echo "test 418"
-        ssh hubadmin@stage.cmkc.hubzero.org "date >> /var/www/stage/drbtest.txt"
+        echo "updating the last-auto-deploy.txt file"
+        ssh hubadmin@stage.cmkc.hubzero.org "date >> /var/www/stage/last-auto-deploy.txt"
