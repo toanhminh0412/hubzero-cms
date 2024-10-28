@@ -12,6 +12,9 @@ use Hubzero\Document\Assets;
 
 /**
  * Class for a component View
+ * 
+ * @TODO: Change all public attributes of View class to protected
+ * when all references have been fixed to use get()/set()
  */
 class View extends AbstractView
 {
@@ -20,35 +23,35 @@ class View extends AbstractView
 	 *
 	 * @var  string
 	 */
-	protected $_layout = 'display';
+	public $_layout = 'display';
 
 	/**
 	 * Base URL
 	 *
 	 * @var string
 	 */
-	protected $baseurl;
+	public $baseurl;
 
 	/**
 	 * Current component
 	 *
 	 * @var string
 	 */
-	protected $option;
+	public $option;
 
 	/**
 	 * Current controller
 	 *
 	 * @var string
 	 */
-	protected $controller;
+	public $controller;
 
 	/**
 	 * Current task
 	 *
 	 * @var string
 	 */
-	protected $task;
+	public $task;
 
 	/**
 	 * Constructor
