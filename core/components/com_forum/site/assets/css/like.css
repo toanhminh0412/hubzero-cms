@@ -1,24 +1,42 @@
 /* Should put this in the comments.less file */
 .comment-body a.like {
-    color: gray;
+    color: #dadada;
     margin-right: 5px;
     font-size:20px;
+}
+
+.comment-body a.like:hover {
+    color: #a6a6a6;
 }
 
 .comment-body a.userLiked {
     color: red;
 }
 
+.comment-body a.userLiked:hover {
+    color: #ce0202;
+}
+
 .comment-body .likesStat {
     font-size: 14px;
     vertical-align:middle;
     margin-top: 5px;
+    text-decoration: underline;
+}
+
+.comment-body .noLikes {
+    text-decoration: none;
 }
 
 .comment-body .likesStat:hover {
     cursor: pointer;
     color: black;
     text-decoration: underline;
+}
+
+.comment-body .noLikes:hover {
+    cursor: auto;
+    text-decoration: none;
 }
 
 .elementInline {

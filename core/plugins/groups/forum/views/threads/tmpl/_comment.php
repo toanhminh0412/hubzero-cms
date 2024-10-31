@@ -89,8 +89,8 @@ $this->css('like.css')
                        data-likes-list="<?php echo $userNameLikesArray; ?>"
                        data-count="<?php echo $countLike; ?>"
                     ></a>
-                    <span class="likesStat">
-                        <?php echo ($countLike>0) ? "Like (" . $countLike . ")" : "Like"; ?>
+                    <span class="likesStat <?php if ($countLike==0) { echo "noLikes"; } ?>">
+                        <?php echo ($countLike>0) ? "View Likes (" . $countLike . ")" : "No Likes"; ?>
                     </span>
                 </div>
                 <div class="clear"></div>

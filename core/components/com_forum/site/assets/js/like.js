@@ -43,7 +43,7 @@ window.addEventListener('DOMContentLoaded', (domEvent) => {
                             likeButton.dataset.count = `${newLikeCount}`;
                             likeButton.classList.remove("userLiked");
                             likeButton.dataset.likesList = newLikesString;
-                            likeStatsLink.innerHTML = (newLikeCount === 0) ? 'Like' : `Like (${newLikeCount})`;
+                            likeStatsLink.innerHTML = (newLikeCount === 0) ? 'No Likes' : `View Likes (${newLikeCount})`;
 
                             if (newLikeCount > 0) {
                                 let whoLikedArray = [];
@@ -57,8 +57,10 @@ window.addEventListener('DOMContentLoaded', (domEvent) => {
                                     whoLikedArray.push(`<a href=${userProfileUrl} target='_blank'>${userName}</a>`);
                                 }
 
+                                likeStatsLink.classList.remove("noLikes");
                                 whoLikedPostDiv.innerHTML = "<div class='names'>" + whoLikedArray.join(', ') + " liked this</div>";
                             } else {
+                                likeStatsLink.classList.add("noLikes");
                                 whoLikedPostDiv.innerHTML = "";
                             }
 
@@ -69,12 +71,13 @@ window.addEventListener('DOMContentLoaded', (domEvent) => {
                     addLike(threadId, postId, userId).then((res) => {
                         if (res.ok) {
                             const newLikeCount = Number(likeCount) + 1;
-                            const newLikesString = [...likesListArray, nameAndId].join('/');
+                            const newLikesString = [...likesListArray, nameAndId].filter(Boolean).join('/');
 
                             likeButton.dataset.count = `${newLikeCount}`;
                             likeButton.classList.add("userLiked");
                             likeButton.dataset.likesList = newLikesString;
-                            likeStatsLink.innerHTML = `Like (${newLikeCount})`;
+                            likeStatsLink.innerHTML = `View Likes (${newLikeCount})`;
+                            likeStatsLink.classList.remove("noLikes");
 
                             let whoLikedArray = [];
                             const newLikesArray = newLikesString.split("/");
