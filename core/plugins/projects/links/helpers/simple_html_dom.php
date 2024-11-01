@@ -862,7 +862,7 @@ class simple_html_dom
 
 	protected function skip($chars)
 	{
-		$this->pos += strspn($this->doc, $chars, $this->pos);
+		$this->pos += strspn($this->doc, $chars ? $chars : '', $this->pos);
 		$this->char = ($this->pos<$this->size) ? $this->doc[$this->pos] : null; // next
 	}
 
