@@ -674,7 +674,7 @@ class plgGroupsCalendar extends \Hubzero\Plugin\Plugin
 		}
 
 		//if we are updating set modified time and actor
-		if (!isset($event['id']) || $event['id'] == 0)
+		if (!isset($event['id']) || !$event['id'])
 		{
 			$event['created']    = Date::toSql();
 			$event['created_by'] = $this->user->get('id');
