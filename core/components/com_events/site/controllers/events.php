@@ -842,7 +842,7 @@ class Events extends SiteController
 			'row' => $row,
 			'authorized' => $authorized,
 			'fields' => $fields,
-			'config' => $config,
+			'config' => $this->config,
 			'categories' => $categories,
 			'offset' => $offset,
 			'tags' => $tags,
