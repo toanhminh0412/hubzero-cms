@@ -22,3 +22,4 @@ robots.txt
 auto-deployments.log
 deployments.log
 freeze-auto-deployments
+config/
