@@ -254,6 +254,7 @@ class plgCronStorefront extends \Hubzero\Plugin\Plugin
 		$message = App::get('mailer');
 		$message->setSubject(Lang::txt('Storefront') . ': ' . Lang::txt('Publish down notifications'))
 			->addFrom(Config::get('mailfrom'), Config::get('sitename'))
+			->setTo(Config::get('mailfrom'), Config::get('sitename'))
 			->addHeader('X-Component', 'com_storefront')
 			->addHeader('X-Component-Object', 'storefront_publish_down_notifications');
 
@@ -261,7 +262,7 @@ class plgCronStorefront extends \Hubzero\Plugin\Plugin
 		{
 			if (\Hubzero\Utility\Validate::email($email))
 			{
-				$message->addTo($email);
+				$message->addBcc($email);
 			}
 		}
 
