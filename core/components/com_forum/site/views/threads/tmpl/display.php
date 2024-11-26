@@ -60,6 +60,7 @@ $now = Date::of('now')->toSql();
 				     ->set('controller', $this->controller)
 				     ->set('comments', $posts)
 				     ->set('thread', $this->thread)
+				     ->set('likes', $this->likes)
 				     ->set('parent', 0)
 				     ->set('config', $this->config)
 				     ->set('depth', 0)
@@ -284,3 +285,4 @@ $now = Date::of('now')->toSql();
 		</aside><!-- / .aside -->
 	</div>
 </section><!-- / .below section -->
+

@@ -1246,6 +1246,15 @@ class plgGroupsForum extends \Hubzero\Plugin\Plugin
 		$this->_authorize('thread', $thread->get('id'));
 		$this->_authorize('post');
 
+		// Get all the likes of this thread
+		$db = \App::get('db');
+		$queryLikes = "SELECT LIKES.threadId as 'threadId', LIKES.postId as 'postId', 
+		  LIKES.userId as 'userId', USERS.name as 'userName', USERS.email as 'userEmail' 
+		  FROM jos_forum_posts_like as LIKES, jos_users AS USERS
+		  WHERE LIKES.userId = USERS.id AND LIKES.threadId = " . $thread->get('id');
+		$db->setQuery($queryLikes);
+		$initialLikesList = $db->loadObjectList();
+
 		// If the access is anything beyond public,
 		// make sure they're logged in.
 		if (User::isGuest() && !in_array($thread->get('access'), User::getAuthorisedViewLevels()))
@@ -1280,6 +1289,7 @@ class plgGroupsForum extends \Hubzero\Plugin\Plugin
 			->set('section', $section)
 			->set('category', $category)
 			->set('thread', $thread)
+			->set('likes', $initialLikesList)
 			->set('filters', $filters)
 			->setErrors($this->getErrors())
 			->loadTemplate();
@@ -1505,7 +1515,7 @@ class plgGroupsForum extends \Hubzero\Plugin\Plugin
 
 		// Email the group and insert email tokens to allow them to respond to group posts via email
 		$params = Component::params('com_groups');
-		if ($params->get('email_comment_processing') && (isset($moving) && $moving == false))
+		if ($params->get('email_forum_comments') && (isset($moving) && $moving == false))
 		{
 			$thread->set('section', $section->get('alias'));
 			$thread->set('category', $category->get('alias'));
@@ -1552,8 +1562,17 @@ class plgGroupsForum extends \Hubzero\Plugin\Plugin
 					$unsubscribeToken = $encryptor->buildEmailToken(1, 3, $userID, $this->group->get('gidNumber'));
 					$unsubscribeLink  = rtrim(Request::base(), '/') . '/' . ltrim(Route::url('index.php?option=com_groups&cn=' . $this->group->get('cn') .'&active=forum&action=unsubscribe&t=' . $unsubscribeToken), DS);
 
-					$from['replytoname']  = Lang::txt('PLG_GROUPS_FORUM_REPLYTO') . ' @ ' . Config::get('sitename');
-					$from['replytoemail'] = 'hgm-' . $token . '@' . $_SERVER['HTTP_HOST'];
+
+					if(Component::params('com_groups')->get('email_comment_processing'))
+					{
+						$from['replytoname']  = Lang::txt('PLG_GROUPS_FORUM_REPLYTO') . ' @ ' . Config::get('sitename');
+						$from['replytoemail'] = 'hgm-' . $token . '@' . $_SERVER['HTTP_HOST'];
+					}
+					else
+					{
+						$from['replytoname']  = 'noreply';
+						$from['replytoemail'] = 'noreply@' . $_SERVER['HTTP_HOST'];
+					}
 				}
 
 				$msg = array();
