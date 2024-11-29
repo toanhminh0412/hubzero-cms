@@ -15,79 +15,23 @@
 */
 
 /*
-| Component
-|
-| Build the route by component name
-*/
-$router->rules('build')->append('component', function ($uri)
-{
-	$route = $uri->getPath();
-	$query = $uri->getQuery(true);
-	$tmp   = '';
-
-	if (!isset($query['option']) && !isset($query['Itemid']))
-	{
-		return $uri;
-	}
-
-	if (!isset($query['option']))
-	{
-		$query['option'] = 'com_cpanel';
-	}
-
-	$query['option'] = \App::get('component')->canonical($query['option']);
-
-	$tmp = isset($query['option']) ? substr($query['option'], 4) . '/' . $tmp : $tmp;
-
-	$route .= $tmp ? '/' . $tmp : '';
-
-	unset($query['option']);
-
-	//Set query again in the URI
-	$uri->setQuery($query);
-	$uri->setPath($route);
-
-	return $uri;
-});
-
-/*
 | SEF Rewrite
 |
 | Remove the base URI path. This will strip everything up to the base
 */
-$router->rules('build')->append('rewrite', function ($uri)
+$router->rules('build')->append('base', function ($uri)
 {
 	// Get the path data
 	$route = $uri->getPath();
 
-	if (\App::get('config')->get('sef_suffix') && !(substr($route, -9) == 'index.php' || substr($route, -1) == '/'))
+	$base = \App::get('request')->base(true);
+	if (substr($base, -strlen(\App::get('client')->name)) != \App::get('client')->name
+	 && substr($base, -strlen(\App::get('client')->url)) != \App::get('client')->url)
 	{
-		if ($format = $uri->getVar('format', 'html'))
-		{
-			$route .= '.' . $format;
-
-			$uri->delVar('format');
-		}
-	}
-
-	if (\App::get('config')->get('sef_rewrite'))
-	{
-		if ($route == 'index.php')
-		{
-			$route = '';
-		}
-		else
-		{
-			$route = str_replace('index.php/', '', $route);
-		}
+		$base .= '/' . \App::get('client')->name;
 	}
 
 	// Add basepath to the uri
-	$base = \App::get('request')->base(true);
-	if (!\App::isSite())
-	{
-		$base = rtrim($base, '/') . '/' . \App::get('client')->name;
-	}
 	$uri->setPath($base . '/' . $route);
 
 	return $uri;
@@ -145,18 +89,12 @@ $router->rules('parse')->append('component', function ($uri)
 	{
 		$option = 'com_login';
 	}
-	else
-	{
-		$segments = explode('/', $uri->getPath());
-		$client = array_shift($segments);
-		$option = array_shift($segments);
 
-		if (empty($option))
+	if (empty($option))
+	{
+		if (strtoupper(\App::get('request')->method()) == 'POST')
 		{
-			if (strtoupper(\App::get('request')->method()) == 'POST')
-			{
-				$option = \App::get('request')->getCmd('option', '', 'post');
-			}
+			$option = \App::get('request')->getCmd('option', '', 'post');
 		}
 	}
 
@@ -165,7 +103,7 @@ $router->rules('parse')->append('component', function ($uri)
 		$option = 'com_cpanel';
 	}
 
-	$uri->setVar('option', \App::get('component')->canonical($option));
+	$uri->setVar('option', $option);
 
 	return true;
 });
