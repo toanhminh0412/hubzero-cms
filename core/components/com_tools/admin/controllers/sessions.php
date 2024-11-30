@@ -214,7 +214,7 @@ class Sessions extends AdminController
 		if (is_array($results))
 		{
 			// HTML
-			// Print out the applet tags or the error message, as the case may be.
+			// Print out the viewer tags or the error message, as the case may be.
 			foreach ($results as $line)
 			{
 				$line = trim($line);
